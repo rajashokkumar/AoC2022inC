@@ -3,7 +3,7 @@
 #include<string.h>
 #include <stdlib.h>
 
-#define STR_MAX 4000
+#define STR_MAX 400
 #define MAX_ROW 100
 #define MAX_COL 100
 
@@ -118,7 +118,7 @@ void setVisible()
    int i;
    int j;
    int high = 0;
-
+#if 1
    //First left to right
    for(i=1;i< (actRow)-1;i++)
    {
@@ -160,7 +160,7 @@ void setVisible()
          }
       }
    }
-
+#endif
    //Now bottom to top
    for(i=1;i< (actCol)-1;i++)
    {

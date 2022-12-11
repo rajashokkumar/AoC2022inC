@@ -3,7 +3,7 @@
 #include<string.h>
 #include <stdlib.h>
 
-#define STR_MAX 4000
+#define STR_MAX 256
 #define MAX_ROW 100
 #define MAX_COL 100
 
@@ -118,7 +118,7 @@ void setVisible()
    int i;
    int j;
    int high = 0;
-#if 1
+
    //First left to right
    for(i=1;i< (actRow)-1;i++)
    {
@@ -160,7 +160,7 @@ void setVisible()
          }
       }
    }
-#endif
+
    //Now bottom to top
    for(i=1;i< (actCol)-1;i++)
    {
@@ -175,6 +175,123 @@ void setVisible()
       }
    }
 
+}
+
+int findScore(int row, int col)
+{
+   int leftScore = 0;
+   int rightScore = 0;
+   int topScore = 0;
+   int bottomScore =0;
+   int totalScore = 0;
+   int i;
+   int j;
+   
+
+   //Right Score
+   i = row;
+   j = col;
+   
+  // printf("row:%d col:%d value is[%d]\n", row, col, data[row][col]);
+
+   j++;
+   for(;j<actCol;j++)
+   {
+      if( data[i][j] < data[row][col])
+      {
+         rightScore++;
+      }
+      else
+      {
+         rightScore++;
+         break;
+      }
+   }
+   //printf("Right score is [%d]\n", rightScore);
+
+   //Left Score
+   i = row;
+   j = col;
+   
+      j--;
+   for(;j >= 0;j--)
+   {
+      if( data[i][j] < data[row][col])
+      {
+         leftScore++;
+      }
+      else
+      {
+         leftScore++;
+         break;
+      }
+   }
+
+   //printf("Left score is [%d]\n", leftScore);
+
+   //Top score
+   i = row;
+   j = col;
+   i--;
+   for(; i>=0; i--)
+   {
+      if(data[i][j] < data[row][col])
+      {
+         topScore++;
+      } 
+      else
+      {
+         topScore++;
+         break;
+      }
+   }
+   //printf("Top score is [%d]\n", topScore);
+
+   //Bottom score
+   i = row;
+   j = col;
+   i++;
+   for(; i<actRow; i++)
+   {
+      if(data[i][j] < data[row][col])
+      {
+         bottomScore++;
+      } 
+      else
+      {
+         bottomScore++;
+         break;
+      }
+   }
+   //printf("bottom score is [%d]\n", bottomScore);
+
+
+   totalScore = rightScore * leftScore * topScore * bottomScore;
+
+   return totalScore;
+}
+
+
+
+int highScore()
+{
+
+   int i =0;
+   int j = 0;
+   int highScore = 0;
+   int score = 0;
+   for(i=1; i < actRow-1; i++)
+   {
+      for (j=1; j< actCol-1; j++)
+      {
+         score = findScore(i,j);
+         if(score > highScore)
+         {
+            highScore = score;
+         }
+      }
+   }
+   return highScore;
 }
 int main(int argc, char *argv[])
 {
@@ -220,9 +337,11 @@ int main(int argc, char *argv[])
 
    visibleCount = countFlags();
 
-   printFlags(row, col);
-   printData();
-   printf("Number of row %d col:%d, visible : %d\n", actRow, actCol, visibleCount);
+   //printFlags(row, col);
+   //printData();
+   printf("Part 1:  visible : %d\n", visibleCount);
+   printf("Row:[%d] Col:[%d]\n", actRow, actCol);
+   printf("Part 2: High score : %d\n", highScore());
 
    return 0;
 }
