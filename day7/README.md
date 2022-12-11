@@ -1,0 +1,1 @@
+NOTE : This is a copied code from https://github.com/piscilus/aoc22/blob/master/day07/main.c
